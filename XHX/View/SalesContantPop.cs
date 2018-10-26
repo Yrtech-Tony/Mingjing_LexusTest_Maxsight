@@ -88,7 +88,7 @@ namespace XHX.View
             }
             else
             {
-                if (userDto.RoleType == "I" && pageName == "ExecuteTeamAlter")
+                if (userDto.RoleType == "I")
                 {
                     DataSet ds1 = service.SearchRecheckStatus(projectCode, shopCode);
                     string statusCode = "";
@@ -96,7 +96,12 @@ namespace XHX.View
                     {
                         statusCode = ds1.Tables[0].Rows[0]["StatusCode"].ToString();
                     }
-                    if (statusCode == "S2")
+                    if (string.IsNullOrEmpty(statusCode))
+                    {
+                        btnSave.Enabled = true;
+                        btnSaveLossDesc.Enabled = true;
+                    }
+                    else if (statusCode == "S2" && pageName == "ExecuteTeamAlter")
                     {
                         btnSave.Enabled = true;
                         btnSaveLossDesc.Enabled = true;
